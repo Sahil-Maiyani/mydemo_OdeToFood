@@ -1,0 +1,29 @@
+﻿@page
+@model mydemo_OdeToFood.Pages.Restaurants.ListModel
+@{
+}
+
+<h1>Restaurants</h1>
+
+<form method="get">
+    <div class="form-group">
+        <div class="input-group">
+            <input type="search" class="form-control" asp-for="SearchTerm" placeholder="Search your favorite restaurants here... " />
+            <span class="input-group-btn">
+                <button class="btn btn btn-default">
+                    <i class="glyphicon glyphicon-search"></i>
+                </button>
+            </span>
+        </div>
+    </div>
+</form>
+
+<a asp-page=".\Edit" class="btn btn-success pull-right">Add New</a>
+<br/>
+@foreach(var restaurant in Model.Restaurants)
+{
+    <partial name="_Summary" model="restaurant" />
+}
+
+
+<div>@Model.Message</div>
