@@ -26,11 +26,12 @@ namespace mydemo_OdeToFood
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContextPool<OdeToFoodDbContext>(options => {
+            services.AddDbContextPool<OdeToFoodDbContext>(options =>
+            {
                 options.UseSqlServer(Configuration.GetConnectionString("OdeToFood"));
             });
 
-            services.AddScoped<IRestaurantData, SqlRestaurantData>(); 
+            services.AddScoped<IRestaurantData, SqlRestaurantData>();
 
             services.Configure<CookiePolicyOptions>(options =>
             {
@@ -56,12 +57,30 @@ namespace mydemo_OdeToFood
                 app.UseHsts();
             }
 
+            app.Use(SayHelloMiddleware);
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseNodeModules(env);
             app.UseCookiePolicy();
 
             app.UseMvc();
+        }
+
+        private RequestDelegate SayHelloMiddleware(
+                                    RequestDelegate next)
+        {
+            return async ctx =>
+            {
+
+                if (ctx.Request.Path.StartsWithSegments("/hello"))
+                {
+                    await ctx.Response.WriteAsync("Hello, World!");
+                }
+                else
+                {
+                    await next(ctx);
+                }
+            };
         }
     }
 }
