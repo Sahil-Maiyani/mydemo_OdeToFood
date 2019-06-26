@@ -265,7 +265,7 @@ FakesAssemblies/
 
 # Node.js Tools for Visual Studio
 .ntvs_analysis.dat
-node_modules/
+node_modules/*
 
 # Visual Studio 6 build log
 *.plg
@@ -338,3 +338,8 @@ ASALocalRun/
 
 # BeatPulse healthcheck temp database
 healthchecksdb
+
+#project publish folders
+publish/*
+self-contained-publish/*
+/mydemo_OdeToFood/node_modules

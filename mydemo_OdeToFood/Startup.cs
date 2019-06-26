@@ -31,6 +31,7 @@ namespace mydemo_OdeToFood
                 options.UseSqlServer(Configuration.GetConnectionString("OdeToFood"));
             });
 
+            //services.AddScoped<IRestaurantData, InMemoryRestaurantData>();
             services.AddScoped<IRestaurantData, SqlRestaurantData>();
 
             services.Configure<CookiePolicyOptions>(options =>
