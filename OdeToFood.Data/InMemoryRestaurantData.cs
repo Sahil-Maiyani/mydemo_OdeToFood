@@ -11,11 +11,16 @@ namespace OdeToFood.Data
 
         public InMemoryRestaurantData()
         {
+            var booking1 = new Booking { Id = 1, CustomerName = "micheal m", Person = 4, Phone = "8469692636", Time = "10:00" };
+            var booking2 = new Booking { Id = 2, CustomerName = "joy j", Person = 2, Phone = "9876765645", Time = "09:00" };
+            var booking3 = new Booking { Id = 3, CustomerName = "broad b", Person = 6, Phone = "9876765456", Time = "08:00" };
+            var booking4 = new Booking { Id = 4, CustomerName = "alex a", Person = 2, Phone = "5467878987", Time = "01:00" };
+
             restaurants = new List<Restaurant>()
             {
-                new Restaurant { Id = 1, Name = "Scott's Pizza", Location="Maryland", Cuisine=CuisineType.Italian},
-                new Restaurant { Id = 2, Name = "Cinnamon Club", Location="London", Cuisine=CuisineType.Italian},
-                new Restaurant { Id = 3, Name = "La Costa", Location = "California", Cuisine=CuisineType.Mexican}
+                new Restaurant { Id = 1, Name = "Scott's Pizza", Location="Maryland", Cuisine=CuisineType.Italian, Bookings= new List<Booking>{ booking1, booking2 } },
+                new Restaurant { Id = 2, Name = "Cinnamon Club", Location="London", Cuisine=CuisineType.Italian, Bookings= new List<Booking>{ booking3, booking4 }},
+                new Restaurant { Id = 3, Name = "La Costa", Location = "California", Cuisine=CuisineType.Mexican, Bookings= new List<Booking>{ booking1, booking2 }}
             };
         }
 

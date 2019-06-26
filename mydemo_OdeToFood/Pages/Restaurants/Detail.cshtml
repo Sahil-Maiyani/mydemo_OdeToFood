@@ -33,4 +33,12 @@
     Cuisine: @Model.Restaurant.Cuisine
 </div>
 
+
+@* List all bookings of restaurants in table *@
+
+@foreach (var booking in Model.Restaurant.Bookings)
+{
+   <label>Name:</label> @booking.CustomerName; <br/>
+}
+
 <a asp-page="./List" class="btn btn-default">All Restaurants</a>
