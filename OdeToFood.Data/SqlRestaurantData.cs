@@ -59,6 +59,11 @@ namespace OdeToFood.Data
             return db.Restaurants.Where(r => r.Name == name).FirstOrDefault();
         }
 
+        public bool NewBooking(int restaurantId, Booking newBooking)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public Restaurant UpdateRestaurant(Restaurant updatedRestaurant)
         {
             var entity = db.Restaurants.Attach(updatedRestaurant);

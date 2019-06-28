@@ -28,7 +28,7 @@
 
         <a class="btn btn-lg"
            asp-page="./Edit"
-           asp-route-restaurantName="@Model.Name">
+           asp-route-restaurantId="@Model.Id">
             <i class="glyphicon glyphicon-edit"></i>
         </a>
 
@@ -37,5 +37,7 @@
            asp-route-restaurantId="@Model.Id">
             <i class="glyphicon glyphicon-trash"></i>
         </a>
+
+        <a class="btn btn-primary pull-right" asp-page="./NewBooking" asp-route-restaurantId="@Model.Id">Book My Table</a>
     </div>
 </div>

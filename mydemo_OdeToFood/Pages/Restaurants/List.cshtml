@@ -19,7 +19,8 @@
 </form>
 
 <a asp-page=".\Edit" class="btn btn-success pull-right">Add New</a>
-<br/>
+<br/><br />
+
 @foreach(var restaurant in Model.Restaurants)
 {
     <partial name="_Summary" model="restaurant" />

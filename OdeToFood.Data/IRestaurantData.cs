@@ -31,6 +31,8 @@ namespace OdeToFood.Data
 
         int GetCountOfRestaurants();
 
+        bool NewBooking(int restaurantId, Booking newBooking);
+
         int Commit();
     }
 }

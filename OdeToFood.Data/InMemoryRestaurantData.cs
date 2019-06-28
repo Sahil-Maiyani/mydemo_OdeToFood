@@ -80,6 +80,25 @@ namespace OdeToFood.Data
         {
             return restaurants.SingleOrDefault(r => r.Name == restaurantName);
         }
+
+
+        /***
+        Author: sahil maiyani
+        Date: 27-06-2019
+
+        Input: 
+
+        ***/
+        public bool NewBooking(int restaurantId, Booking newBooking)
+        {
+            var restaurant = restaurants.SingleOrDefault(r => r.Id == restaurantId);
+            if (restaurant != null)
+            {
+                restaurant.Bookings.Add(newBooking);
+            }
+
+            return true;
+        }
     }
 }
 

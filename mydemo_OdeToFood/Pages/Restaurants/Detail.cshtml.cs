@@ -18,14 +18,14 @@ namespace mydemo_OdeToFood.Pages.Restaurants
             this.restaurantData = restaurantData;
         }
 
-        public IActionResult OnGet(string restaurantName)
+        public IActionResult OnGet(int restaurantId)
         {
             /* EI code: 01
              * Note: also change in `OnGet` method paratmeter from `string restaurantName` to `int restaurantId`
              * 
              *  Restaurant = restaurantData.GetRestuarantsById(restaurantId);
              */
-            Restaurant = restaurantData.mGetRestuarantsByName(restaurantName);
+            Restaurant = restaurantData.GetRestuarantsById(restaurantId);
 
             if (Restaurant == null)
             {
