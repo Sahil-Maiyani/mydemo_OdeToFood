@@ -16,9 +16,12 @@ namespace mydemo_OdeToFood
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        private IHostingEnvironment env { get; set; }
+
+        public Startup(IConfiguration configuration, IHostingEnvironment hostingEnvironment)
         {
             Configuration = configuration;
+            env = hostingEnvironment;
         }
 
         public IConfiguration Configuration { get; }
@@ -31,8 +34,15 @@ namespace mydemo_OdeToFood
                 options.UseSqlServer(Configuration.GetConnectionString("OdeToFood"));
             });
 
-            //services.AddScoped<IRestaurantData, InMemoryRestaurantData>();
-            services.AddScoped<IRestaurantData, SqlRestaurantData>();
+            // Separate InMemoryData and SqlData on develpment and production execution environment
+            if (env.IsDevelopment())
+            {
+                services.AddScoped<IRestaurantData, InMemoryRestaurantData>();
+            }
+            else if (env.IsProduction())
+            {
+                services.AddScoped<IRestaurantData, SqlRestaurantData>();
+            }
 
             services.Configure<CookiePolicyOptions>(options =>
             {
@@ -46,7 +56,7 @@ namespace mydemo_OdeToFood
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app)
         {
             if (env.IsDevelopment())
             {
