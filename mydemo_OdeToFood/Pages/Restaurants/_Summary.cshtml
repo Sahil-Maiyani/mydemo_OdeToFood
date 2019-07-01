@@ -1,8 +1,9 @@
 ﻿@using  OdeToFood.Core
 @model Restaurant
 
+@*Check if user is logged in  or not. if user is not login disable `Book My Table` button using Bootstrap `disabled`  class.*@
 @{
-    string Disabled = User.Identity.IsAuthenticated ? "" : "disabled" ;
+    string Disabled = User.Identity.IsAuthenticated ? "" : "disabled";
 }
 
 <div class="panel panel-default">
@@ -42,6 +43,7 @@
             <i class="glyphicon glyphicon-trash"></i>
         </a>
 
+        @*add class disable class*@
         <a class="btn btn-primary pull-right @Disabled" asp-page="./NewBooking" asp-route-restaurantId="@Model.Id"> Book My Table</a>
     </div>
 </div>
