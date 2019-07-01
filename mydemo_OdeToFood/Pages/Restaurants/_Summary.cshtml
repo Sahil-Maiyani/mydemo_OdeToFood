@@ -1,6 +1,10 @@
 ﻿@using  OdeToFood.Core
 @model Restaurant
 
+@{
+    string Disabled = User.Identity.IsAuthenticated ? "" : "disabled" ;
+}
+
 <div class="panel panel-default">
     <div class="panel-heading">
         <h3>@Model.Name</h3>
@@ -38,6 +42,6 @@
             <i class="glyphicon glyphicon-trash"></i>
         </a>
 
-        <a class="btn btn-primary pull-right" asp-page="./NewBooking" asp-route-restaurantId="@Model.Id">Book My Table</a>
+        <a class="btn btn-primary pull-right @Disabled" asp-page="./NewBooking" asp-route-restaurantId="@Model.Id"> Book My Table</a>
     </div>
 </div>

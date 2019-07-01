@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using OdeToFood.Core;
 using System;
 using System.Collections.Generic;
@@ -6,7 +7,7 @@ using System.Text;
 
 namespace OdeToFood.Data
 {
-    public class OdeToFoodDbContext : DbContext
+    public class OdeToFoodDbContext : IdentityDbContext
     {
         public OdeToFoodDbContext(DbContextOptions<OdeToFoodDbContext> dbContextOptions)
             : base(dbContextOptions)

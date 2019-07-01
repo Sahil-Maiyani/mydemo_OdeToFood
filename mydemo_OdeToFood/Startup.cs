@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -30,6 +31,9 @@ namespace mydemo_OdeToFood
             {
                 options.UseSqlServer(Configuration.GetConnectionString("OdeToFood"));
             });
+
+            services.AddIdentity<IdentityUser, IdentityRole>()
+                     .AddEntityFrameworkStores<OdeToFoodDbContext>();
 
             services.AddScoped<IRestaurantData, InMemoryRestaurantData>();
             //services.AddScoped<IRestaurantData, SqlRestaurantData>();
@@ -61,6 +65,7 @@ namespace mydemo_OdeToFood
             app.Use(SayHelloMiddleware);
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            app.UseAuthentication();
             app.UseNodeModules(env);
             app.UseCookiePolicy();
 

@@ -5,11 +5,11 @@
   </PropertyGroup>
 
   <Target Name="PostBuild" AfterTargets="ComputeFilesToPublish">
-    <Exec Command="npm install"/>
+    <Exec Command="npm install" />
   </Target>
 
   <ItemGroup>
-    <Content Include="node_modules/**" CopyToPublishDirectory="PreserveNewest"/>
+    <Content Include="node_modules/**" CopyToPublishDirectory="PreserveNewest" />
   </ItemGroup>
 
   <ItemGroup>
@@ -22,6 +22,10 @@
   <ItemGroup>
     <ProjectReference Include="..\OdeToFood.Core\OdeToFood.Core.csproj" />
     <ProjectReference Include="..\OdeToFood.Data\OdeToFood.Data.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Areas\Identity\Services\" />
   </ItemGroup>
 
 </Project>
