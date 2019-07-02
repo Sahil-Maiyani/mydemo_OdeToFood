@@ -45,25 +45,26 @@ namespace OdeToFood.Data
 
         public Restaurant GetRestuarantsById(int restaturantId)
         {
-            var Restaurant = db.Restaurants.Find(restaturantId);
+            var rs = db.Restaurants.Find(restaturantId);
 
-            var query = from b in db.Bookings
+            rs.Bookings = (from b in db.Bookings
                         where b.RestaurantId == restaturantId
-                        select b;
+                        select b).ToList();
 
-            logger.LogDebug("Pre LOOP Restaurant.Bookings.Count value: {0}", Restaurant.Bookings);
+            logger.LogDebug("Pre LOOP Restaurant.Bookings.Count value: {0}", rs.Bookings);
             int debugi = 0;
 
-            foreach (var booking in query.Distinct())
-            {
-                logger.LogDebug("Loop over query ITER {0}:  booking object customerName value {1}",
-                                    debugi++, booking.CustomerName);
+            //foreach (var booking in query.Distinct())
+            //foreach (var bk in query)
+            //{
+            //    logger.LogDebug("Loop over query ITER {0}:  booking object customerName value {1}",
+            //                        debugi++, bk.CustomerName);
 
-                Restaurant.Bookings.Add(booking);
-            }
+            //    rs.Bookings.Add(bk);
+            //}
 
-            logger.LogDebug("Restaurant.Bookings.Count value: {0}", Restaurant.Bookings.Count);
-            return Restaurant;
+            logger.LogDebug("Restaurant.Bookings.Count value: {0}", rs.Bookings.Count);
+            return rs;
 
         }
 
