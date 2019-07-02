@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -27,13 +28,13 @@ namespace mydemo_OdeToFood.Pages.Restaurants
             this.HtmlHelper = htmlHelper;
         }
 
-        public IActionResult OnGet(string restaurantName)
+        public IActionResult OnGet(int? restaurantId)
         {
             Cuisines = HtmlHelper.GetEnumSelectList<CuisineType>();
 
-            if (restaurantName != null)
+            if (restaurantId.HasValue)
             {
-                Restaurant = restaurantData.mGetRestuarantsByName(restaurantName);
+                Restaurant = restaurantData.GetRestuarantsById(restaurantId.Value);
             }
             else
             {

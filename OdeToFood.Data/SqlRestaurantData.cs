@@ -2,16 +2,19 @@
 using OdeToFood.Core;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace OdeToFood.Data
 {
     public class SqlRestaurantData : IRestaurantData
     {
         private readonly OdeToFoodDbContext db;
+        private readonly ILogger logger;
 
-        public SqlRestaurantData(OdeToFoodDbContext db)
+        public SqlRestaurantData(OdeToFoodDbContext db, ILogger<SqlRestaurantData> logger)
         {
             this.db = db;
+            this.logger = logger;
         }
 
         public Restaurant AddRestaurant(Restaurant newRestaurant)
@@ -42,7 +45,26 @@ namespace OdeToFood.Data
 
         public Restaurant GetRestuarantsById(int restaturantId)
         {
-            return db.Restaurants.Find(restaturantId);
+            var Restaurant = db.Restaurants.Find(restaturantId);
+
+            var query = from b in db.Bookings
+                        where b.RestaurantId == restaturantId
+                        select b;
+
+            logger.LogDebug("Pre LOOP Restaurant.Bookings.Count value: {0}", Restaurant.Bookings);
+            int debugi = 0;
+
+            foreach (var booking in query.Distinct())
+            {
+                logger.LogDebug("Loop over query ITER {0}:  booking object customerName value {1}",
+                                    debugi++, booking.CustomerName);
+
+                Restaurant.Bookings.Add(booking);
+            }
+
+            logger.LogDebug("Restaurant.Bookings.Count value: {0}", Restaurant.Bookings.Count);
+            return Restaurant;
+
         }
 
         public IEnumerable<Restaurant> GetRestuarantsByName(string name)
@@ -61,7 +83,9 @@ namespace OdeToFood.Data
 
         public bool NewBooking(int restaurantId, Booking newBooking)
         {
-            throw new System.NotImplementedException();
+            newBooking.RestaurantId = restaurantId;
+            db.Bookings.Add(newBooking);
+            return true;
         }
 
         public Restaurant UpdateRestaurant(Restaurant updatedRestaurant)

@@ -38,6 +38,7 @@ namespace mydemo_OdeToFood.Pages.Restaurants
             logger.LogError("logging");
             logger.LogError("Restaurant id: {0}, booking object: {1}", RestaurantId, Booking.CustomerName);
             restaurantData.NewBooking(RestaurantId, Booking);
+            restaurantData.Commit();
             return RedirectToPage("Detail", new { restaurantId = RestaurantId });
         }
     }

@@ -8,6 +8,8 @@ namespace OdeToFood.Core
     {
         public int Id {get; set;}
 
+        public int RestaurantId { get; set; }
+
         public string CustomerName { get; set; }
 
         public string Time { get; set; }

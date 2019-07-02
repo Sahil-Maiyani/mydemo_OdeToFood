@@ -35,8 +35,8 @@ namespace mydemo_OdeToFood
             services.AddIdentity<IdentityUser, IdentityRole>()
                      .AddEntityFrameworkStores<OdeToFoodDbContext>();
 
-            services.AddScoped<IRestaurantData, InMemoryRestaurantData>();
-            //services.AddScoped<IRestaurantData, SqlRestaurantData>();
+            //services.AddScoped<IRestaurantData, InMemoryRestaurantData>();
+            services.AddScoped<IRestaurantData, SqlRestaurantData>();   
 
             services.Configure<CookiePolicyOptions>(options =>
             {
@@ -46,7 +46,9 @@ namespace mydemo_OdeToFood
             });
 
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1).AddRazorPagesOptions(options => {
+                options.Conventions.AuthorizePage("/Restaurants/NewBooking");      
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

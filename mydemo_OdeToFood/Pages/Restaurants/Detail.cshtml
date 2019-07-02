@@ -35,30 +35,33 @@
 
 
 @* List all bookings of restaurants in table *@
-
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>Id</th>
-            <th>Customer name</th>
-            <th>Time</th>
-            <th>Person</th>
-            <th>Phone</th>
-        </tr>
-    </thead>
-
-    <tbody>
-        @foreach (var booking in Model.Restaurant.Bookings)
-        {
+@if (Model.Restaurant.Bookings != null)
+{
+    <table class="table table-striped">
+        <thead>
             <tr>
-                <td>@booking.Id</td>
-                <td>@booking.CustomerName</td>
-                <td>@booking.Time</td>
-                <td>@booking.Person</td>
-                <td>@booking.Phone</td>
+                <th>Id</th>
+                <th>Customer name</th>
+                <th>Time</th>
+                <th>Person</th>
+                <th>Phone</th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+
+        <tbody>
+            @foreach (var booking in Model.Restaurant.Bookings)
+            {
+                <tr>
+                    <td>@booking.Id</td>
+                    <td>@booking.CustomerName</td>
+                    <td>@booking.Time</td>
+                    <td>@booking.Person</td>
+                    <td>@booking.Phone</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
 
 <a asp-page="./List" class="btn btn-default">All Restaurants</a>
