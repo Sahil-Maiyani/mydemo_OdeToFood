@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using mydemo_OdeToFood.Auth;
 using OdeToFood.Data;
 
 namespace mydemo_OdeToFood
@@ -36,7 +37,10 @@ namespace mydemo_OdeToFood
                      .AddEntityFrameworkStores<OdeToFoodDbContext>();
 
             //services.AddScoped<IRestaurantData, InMemoryRestaurantData>();
-            services.AddScoped<IRestaurantData, SqlRestaurantData>();   
+            services.AddScoped<IRestaurantData, SqlRestaurantData>();
+
+            //This service is used in Api login and registration
+            services.AddScoped<IAuthIdentity, ApiAuthentication>();
 
             services.Configure<CookiePolicyOptions>(options =>
             {
