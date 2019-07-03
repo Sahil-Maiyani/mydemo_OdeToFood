@@ -5,20 +5,17 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using mydemo_OdeToFood.Auth;
-using OdeToFood.Data;
 
 namespace mydemo_OdeToFood.Api
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TokenController : ControllerBase
+    public class LoginController : ControllerBase
     {
-        private readonly OdeToFoodDbContext _Context;
         private readonly IAuthIdentity authIdentity;
 
-        public TokenController(OdeToFoodDbContext _context, IAuthIdentity authIdentity)
+        public LoginController(IAuthIdentity authIdentity)
         {
-            _Context = _context;
             this.authIdentity = authIdentity;
         }
 
@@ -27,15 +24,10 @@ namespace mydemo_OdeToFood.Api
             public string Message { get; set; }
         }
 
-        // Get: api/Token 
+        //Get: api/Login
         [HttpGet]
-        public IActionResult GetToken(string userEmail, string userPassword)
+        public IActionResult GetLogin(string userEmail, string userPassword)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             var result = authIdentity.CheckLogIn(userEmail, userPassword);
 
             if (result.Succeeded)
@@ -54,8 +46,6 @@ namespace mydemo_OdeToFood.Api
             {
                 return Ok(new OutputModel { Message = "Invalid Login Attampt" });
             }
-
-
         }
     }
 }

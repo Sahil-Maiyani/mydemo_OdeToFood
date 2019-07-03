@@ -11,6 +11,8 @@ namespace mydemo_OdeToFood.Auth
 
         SignInResult CheckLogIn(string userEmail, string userPassword);
 
+        IdentityResult CheckRegister(string userEmail, string userPassword);
+
         Task<string> GetAuthTokenAsync();
     }
 }

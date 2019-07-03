@@ -19,8 +19,14 @@ namespace mydemo_OdeToFood.Auth
 
         public SignInResult CheckLogIn(string userEmail, string userPassword)
         {
-            var result = TAsync(userEmail, userPassword);
+            var result = LoginAsync(userEmail, userPassword);
 
+            return result.Result;
+        }
+
+        public IdentityResult CheckRegister(string userEmail, string userPassword)
+        {
+            var result = RegistrationAsync(userEmail, userPassword);
             return result.Result;
         }
 
@@ -29,11 +35,21 @@ namespace mydemo_OdeToFood.Auth
             throw new NotImplementedException();
         }
 
-        public async Task<SignInResult> TAsync(string userEmail, string userPassword)
+        private async Task<SignInResult> LoginAsync(string userEmail, string userPassword)
         {
             var result = await signInManager.PasswordSignInAsync(userEmail, userPassword, true, lockoutOnFailure: true);
 
             return result;
         }
+
+        private async Task<IdentityResult> RegistrationAsync(string userEmail, string userPassword)
+        {
+            var user = new IdentityUser { UserName = userEmail, Email = userEmail };
+            var result = await userManager.CreateAsync(user, userPassword);
+
+            return result;
+        }
+
+        
     }
 }
