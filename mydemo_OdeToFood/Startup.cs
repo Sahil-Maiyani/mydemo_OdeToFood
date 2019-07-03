@@ -44,6 +44,7 @@ namespace mydemo_OdeToFood
 
             services.Configure<IdentityOptions>(options =>
             {
+                // This lambda enforce identity framework to take only unique email when registration
                 options.User.RequireUniqueEmail = true;
             });
 

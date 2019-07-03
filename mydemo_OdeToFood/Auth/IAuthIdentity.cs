@@ -9,10 +9,10 @@ namespace mydemo_OdeToFood.Auth
     public interface IAuthIdentity
     {
 
-        SignInResult CheckLogIn(string userEmail, string userPassword);
+        ApiAuthentication.OutputModel CheckLogIn(ApiAuthentication.InputModel input);
 
         ApiAuthentication.OutputModel CheckRegister(ApiAuthentication.InputModel input);
 
-        Task<string> GetAuthTokenAsync();
+        //Task<string> GetAuthTokenAsync();
     }
 }

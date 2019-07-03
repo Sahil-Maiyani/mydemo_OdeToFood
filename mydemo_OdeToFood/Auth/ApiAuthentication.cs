@@ -11,6 +11,11 @@ namespace mydemo_OdeToFood.Auth
         private readonly SignInManager<IdentityUser> signInManager;
         private readonly UserManager<IdentityUser> userManager;
 
+        private readonly string LOGIN_SUCCESS = "User login success. :)";
+        private readonly string LOGIN_2FA = "User login required two step authentication.";
+        private readonly string LOGIN_LOCKED = "User login account is locked.";
+        private readonly string LOGIN_FAILED = "User login Failed.";
+
         public InputModel Input { get; set; }
         public OutputModel Output { get; set; }
 
@@ -22,11 +27,34 @@ namespace mydemo_OdeToFood.Auth
             Output = new OutputModel();
         }
 
-        public SignInResult CheckLogIn(string userEmail, string userPassword)
+        public OutputModel CheckLogIn(InputModel input)
         {
-            var result = LoginAsync(userEmail, userPassword);
+            Input = input;
+            var result = LoginAsync().Result;
 
-            return result.Result;
+            if (result.Succeeded)
+            {
+                Output.SuccessCode = result.Succeeded;
+                Output.Message = LOGIN_SUCCESS;
+
+            }
+            else if (result.RequiresTwoFactor)
+            {
+                Output.SuccessCode = result.RequiresTwoFactor;
+                Output.Message = LOGIN_2FA;
+            }
+            else if (result.IsLockedOut)
+            {
+                Output.SuccessCode = result.IsLockedOut;
+                Output.Message = LOGIN_LOCKED;
+            }
+            else
+            {
+                Output.SuccessCode = false;
+                Output.Message = LOGIN_FAILED;
+            }
+
+            return Output;
         }
 
         public OutputModel CheckRegister(InputModel input)
@@ -44,14 +72,9 @@ namespace mydemo_OdeToFood.Auth
             return Output;
         }
 
-        public Task<string> GetAuthTokenAsync()
+        private async Task<SignInResult> LoginAsync()
         {
-            throw new NotImplementedException();
-        }
-
-        private async Task<SignInResult> LoginAsync(string userEmail, string userPassword)
-        {
-            var result = await signInManager.PasswordSignInAsync(userEmail, userPassword, true, lockoutOnFailure: true);
+            var result = await signInManager.PasswordSignInAsync(Input.UserName, Input.UserPassword, true, lockoutOnFailure: true);
 
             return result;
         }

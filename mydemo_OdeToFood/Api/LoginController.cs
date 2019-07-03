@@ -24,28 +24,19 @@ namespace mydemo_OdeToFood.Api
             public string Message { get; set; }
         }
 
-        //Get: api/Login
-        [HttpGet]
-        public IActionResult GetLogin(string userEmail, string userPassword)
+        //Post: api/Login
+        [HttpPost]
+        public IActionResult PostLogin([FromBody]  ApiAuthentication.InputModel input)
         {
-            var result = authIdentity.CheckLogIn(userEmail, userPassword);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
-            if (result.Succeeded)
-            {
-                return Ok(new OutputModel { Message = "Login Success" });
-            }
-            if (result.RequiresTwoFactor)
-            {
-                return Ok(new OutputModel { Message = "Login required two step auth" });
-            }
-            if (result.IsLockedOut)
-            {
-                return Ok(new OutputModel { Message = "Account Locked" });
-            }
-            else
-            {
-                return Ok(new OutputModel { Message = "Invalid Login Attampt" });
-            }
+            var output = authIdentity.CheckLogIn(input);
+
+            return Ok(output);
+
         }
     }
 }

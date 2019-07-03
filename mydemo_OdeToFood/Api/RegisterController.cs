@@ -21,10 +21,10 @@ namespace mydemo_OdeToFood.Api
             this.authIdentity = authIdentity;
         }
 
-        // Get: api/Register
+        // Post: api/Register
         [HttpPost]
         [Route("")]
-        public IActionResult GetRegister([FromBody] ApiAuthentication.InputModel input)
+        public IActionResult PostRegister([FromBody] ApiAuthentication.InputModel input)
         {
             if (!ModelState.IsValid)
             {
