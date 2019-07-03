@@ -21,31 +21,24 @@ namespace mydemo_OdeToFood.Api
             this.authIdentity = authIdentity;
         }
 
-        public class OutputModel
-        {
-            public string Message { get; set; }
-        }
-
         // Get: api/Register
-        [HttpGet]
-        public IActionResult GetRegister(string userEmail, string userPassword)
+        [HttpPost]
+        [Route("")]
+        public IActionResult GetRegister([FromBody] ApiAuthentication.InputModel input)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var result = authIdentity.CheckRegister(userEmail, userPassword);
+            var output = authIdentity.CheckRegister(input);
 
-            if (result.Succeeded)
+            foreach (var error in output.identityErrors)
             {
-                return Ok(new OutputModel { Message = "Registration Success" });
-            }
-            else
-            {
-                return Ok(new OutputModel { Message = "Failed" });
+                ModelState.AddModelError(error.Code, error.Description);
             }
 
+            return Ok(output);
 
         }
     }

@@ -42,6 +42,11 @@ namespace mydemo_OdeToFood
             //This service is used in Api login and registration
             services.AddScoped<IAuthIdentity, ApiAuthentication>();
 
+            services.Configure<IdentityOptions>(options =>
+            {
+                options.User.RequireUniqueEmail = true;
+            });
+
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
@@ -50,8 +55,9 @@ namespace mydemo_OdeToFood
             });
 
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1).AddRazorPagesOptions(options => {
-                options.Conventions.AuthorizePage("/Restaurants/NewBooking");      
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1).AddRazorPagesOptions(options =>
+            {
+                options.Conventions.AuthorizePage("/Restaurants/NewBooking");
             });
         }
 

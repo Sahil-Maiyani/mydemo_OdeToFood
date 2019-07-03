@@ -11,7 +11,7 @@ namespace mydemo_OdeToFood.Auth
 
         SignInResult CheckLogIn(string userEmail, string userPassword);
 
-        IdentityResult CheckRegister(string userEmail, string userPassword);
+        ApiAuthentication.OutputModel CheckRegister(ApiAuthentication.InputModel input);
 
         Task<string> GetAuthTokenAsync();
     }

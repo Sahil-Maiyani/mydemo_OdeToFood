@@ -6,15 +6,20 @@ using Microsoft.AspNetCore.Identity;
 
 namespace mydemo_OdeToFood.Auth
 {
-    public class ApiAuthentication : IAuthIdentity
+    public partial class ApiAuthentication : IAuthIdentity
     {
         private readonly SignInManager<IdentityUser> signInManager;
         private readonly UserManager<IdentityUser> userManager;
+
+        public InputModel Input { get; set; }
+        public OutputModel Output { get; set; }
 
         public ApiAuthentication(SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager)
         {
             this.signInManager = signInManager;
             this.userManager = userManager;
+
+            Output = new OutputModel();
         }
 
         public SignInResult CheckLogIn(string userEmail, string userPassword)
@@ -24,10 +29,19 @@ namespace mydemo_OdeToFood.Auth
             return result.Result;
         }
 
-        public IdentityResult CheckRegister(string userEmail, string userPassword)
+        public OutputModel CheckRegister(InputModel input)
         {
-            var result = RegistrationAsync(userEmail, userPassword);
-            return result.Result;
+            Input = input;
+            var result = RegistrationAsync().Result;
+            Output.SuccessCode = result.Succeeded;
+
+            if (result.Succeeded)
+            {
+                Output.Message = "New User Login Sucess";
+            }
+            Output.identityErrors = result.Errors;
+
+            return Output;
         }
 
         public Task<string> GetAuthTokenAsync()
@@ -42,14 +56,14 @@ namespace mydemo_OdeToFood.Auth
             return result;
         }
 
-        private async Task<IdentityResult> RegistrationAsync(string userEmail, string userPassword)
+        private async Task<IdentityResult> RegistrationAsync()
         {
-            var user = new IdentityUser { UserName = userEmail, Email = userEmail };
-            var result = await userManager.CreateAsync(user, userPassword);
+            var user = new IdentityUser { UserName = Input.UserName, Email = Input.UserEmail };
+            var result = await userManager.CreateAsync(user, Input.UserPassword);
 
             return result;
         }
 
-        
+
     }
 }
