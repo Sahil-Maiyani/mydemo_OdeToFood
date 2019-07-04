@@ -28,7 +28,23 @@ namespace mydemo_OdeToFood.Api
                 return BadRequest(ModelState);
             }
 
-            var output = authIdentity.CheckLogInByEmail(input);
+            ApiAuthentication.OutputModel output = new ApiAuthentication.OutputModel();
+            if (input.UserName != null)
+            {
+                output = authIdentity.CheckLogIn(input);
+                return Ok(output);
+            }
+            if (input.UserEmail != null)
+            {
+                output = authIdentity.CheckLogInByEmail(input);
+                return Ok(output);
+            }
+            if (input.UserPhone != null)
+            {
+                output = authIdentity.CheckLogInByPhone(input);
+                return Ok(output);
+            }
+
 
             return Ok(output);
 

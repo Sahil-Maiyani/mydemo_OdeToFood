@@ -10,7 +10,8 @@ namespace mydemo_OdeToFood.Auth
 {
     public class ApiAuthenticationFeature : ApiAuthentication, IAuthIdentity
     {
-        private readonly string LOGIN_EMAIL_FAILED = "Can not find given email.";
+        private readonly string LOGIN_EMAIL_FAILED = "Can not find user from given Email.";
+        private readonly string LOGIN_PHONE_FAILED = "Can not find user from given Phone.";
 
         public ApiAuthenticationFeature(SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager) : base(signInManager, userManager)
         {
@@ -30,6 +31,43 @@ namespace mydemo_OdeToFood.Auth
             }
 
             var result = LoginAsync(user).Result;
+
+            MakeLoginOutput(result);
+
+            return Output;
+
+
+        }
+
+        public OutputModel CheckLogInByPhone(InputModel input)
+        {
+            Input = input;
+            var userList = userManager.Users.ToList();
+            IdentityUser currentUser = new IdentityUser();
+
+            foreach (var user in userList)
+            {
+                if (user.PhoneNumber == null)
+                {
+                    continue;
+                }
+
+                if (user.PhoneNumber.Equals(input.UserPhone))
+                {
+                    currentUser = user;
+                    break;
+                }
+            }
+
+
+            if (currentUser.PhoneNumber == null)
+            {
+                Output.SuccessCode = false;
+                Output.Message = LOGIN_PHONE_FAILED;
+
+                return Output;
+            }
+            var result = LoginAsync(currentUser).Result;
 
             MakeLoginOutput(result);
 

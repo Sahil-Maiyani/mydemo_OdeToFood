@@ -11,9 +11,11 @@ namespace mydemo_OdeToFood.Auth
 
         ApiAuthentication.OutputModel CheckLogIn(ApiAuthentication.InputModel input);
 
-        ApiAuthentication.OutputModel CheckRegister(ApiAuthentication.InputModel input);
+        ApiAuthentication.OutputModel NewRegister(ApiAuthentication.InputModel input);
 
         ApiAuthentication.OutputModel CheckLogInByEmail(ApiAuthentication.InputModel input);
+
+        ApiAuthentication.OutputModel CheckLogInByPhone(ApiAuthentication.InputModel input);
 
         //Task<string> GetAuthTokenAsync();
     }

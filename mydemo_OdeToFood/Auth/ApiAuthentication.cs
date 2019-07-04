@@ -60,7 +60,7 @@ namespace mydemo_OdeToFood.Auth
             }
         }
 
-        public OutputModel CheckRegister(InputModel input)
+        public OutputModel NewRegister(InputModel input)
         {
             Input = input;
             var result = RegistrationAsync().Result;
@@ -84,13 +84,18 @@ namespace mydemo_OdeToFood.Auth
 
         private async Task<IdentityResult> RegistrationAsync()
         {
-            var user = new IdentityUser { UserName = Input.UserName, Email = Input.UserEmail };
+            var user = new IdentityUser { UserName = Input.UserName, Email = Input.UserEmail, PhoneNumber = Input.UserPhone };
             var result = await userManager.CreateAsync(user, Input.UserPassword);
 
             return result;
         }
 
         public OutputModel CheckLogInByEmail(InputModel input)
+        {
+            throw new NotImplementedException();
+        }
+
+        public OutputModel CheckLogInByPhone(InputModel input)
         {
             throw new NotImplementedException();
         }

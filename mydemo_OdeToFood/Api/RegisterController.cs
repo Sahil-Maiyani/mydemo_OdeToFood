@@ -31,7 +31,7 @@ namespace mydemo_OdeToFood.Api
                 return BadRequest(ModelState);
             }
 
-            var output = authIdentity.CheckRegister(input);
+            var output = authIdentity.NewRegister(input);
 
             foreach (var error in output.identityErrors)
             {
