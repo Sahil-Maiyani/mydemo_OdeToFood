@@ -19,11 +19,6 @@ namespace mydemo_OdeToFood.Api
             this.authIdentity = authIdentity;
         }
 
-        public class OutputModel
-        {
-            public string Message { get; set; }
-        }
-
         //Post: api/Login
         [HttpPost]
         public IActionResult PostLogin([FromBody]  ApiAuthentication.InputModel input)
@@ -33,7 +28,7 @@ namespace mydemo_OdeToFood.Api
                 return BadRequest(ModelState);
             }
 
-            var output = authIdentity.CheckLogIn(input);
+            var output = authIdentity.CheckLogInByEmail(input);
 
             return Ok(output);
 

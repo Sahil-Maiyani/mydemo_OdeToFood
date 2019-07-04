@@ -8,16 +8,16 @@ namespace mydemo_OdeToFood.Auth
 {
     public partial class ApiAuthentication : IAuthIdentity
     {
-        private readonly SignInManager<IdentityUser> signInManager;
-        private readonly UserManager<IdentityUser> userManager;
+        protected readonly SignInManager<IdentityUser> signInManager;
+        protected readonly UserManager<IdentityUser> userManager;
 
         private readonly string LOGIN_SUCCESS = "User login success. :)";
         private readonly string LOGIN_2FA = "User login required two step authentication.";
         private readonly string LOGIN_LOCKED = "User login account is locked.";
         private readonly string LOGIN_FAILED = "User login Failed.";
 
-        public InputModel Input { get; set; }
-        public OutputModel Output { get; set; }
+        protected InputModel Input { get; set; }
+        protected OutputModel Output { get; set; }
 
         public ApiAuthentication(SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager)
         {
@@ -31,7 +31,12 @@ namespace mydemo_OdeToFood.Auth
         {
             Input = input;
             var result = LoginAsync().Result;
+            MakeLoginOutput(result);
+            return Output;
+        }
 
+        protected void MakeLoginOutput(SignInResult result)
+        {
             if (result.Succeeded)
             {
                 Output.SuccessCode = result.Succeeded;
@@ -53,8 +58,6 @@ namespace mydemo_OdeToFood.Auth
                 Output.SuccessCode = false;
                 Output.Message = LOGIN_FAILED;
             }
-
-            return Output;
         }
 
         public OutputModel CheckRegister(InputModel input)
@@ -87,6 +90,9 @@ namespace mydemo_OdeToFood.Auth
             return result;
         }
 
-
+        public OutputModel CheckLogInByEmail(InputModel input)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -40,7 +40,7 @@ namespace mydemo_OdeToFood
             services.AddScoped<IRestaurantData, SqlRestaurantData>();
 
             //This service is used in Api login and registration
-            services.AddScoped<IAuthIdentity, ApiAuthentication>();
+            services.AddScoped<IAuthIdentity, ApiAuthenticationFeature>();
 
             services.Configure<IdentityOptions>(options =>
             {

@@ -13,6 +13,8 @@ namespace mydemo_OdeToFood.Auth
 
         ApiAuthentication.OutputModel CheckRegister(ApiAuthentication.InputModel input);
 
+        ApiAuthentication.OutputModel CheckLogInByEmail(ApiAuthentication.InputModel input);
+
         //Task<string> GetAuthTokenAsync();
     }
 }
