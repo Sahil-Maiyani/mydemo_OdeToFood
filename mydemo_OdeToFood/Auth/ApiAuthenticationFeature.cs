@@ -42,25 +42,9 @@ namespace mydemo_OdeToFood.Auth
         public OutputModel CheckLogInByPhone(InputModel input)
         {
             Input = input;
-            var userList = userManager.Users.ToList();
-            IdentityUser currentUser = new IdentityUser();
+            var currentUser = userManager.Users.Where(u => u.PhoneNumber.Equals(input.UserPhone)).SingleOrDefault();
 
-            foreach (var user in userList)
-            {
-                if (user.PhoneNumber == null)
-                {
-                    continue;
-                }
-
-                if (user.PhoneNumber.Equals(input.UserPhone))
-                {
-                    currentUser = user;
-                    break;
-                }
-            }
-
-
-            if (currentUser.PhoneNumber == null)
+            if (currentUser == null)
             {
                 Output.SuccessCode = false;
                 Output.Message = LOGIN_PHONE_FAILED;
